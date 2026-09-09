@@ -1,3 +1,49 @@
+<?php
+if(isset($_POST["login"]) && ($_SERVER["REQUEST_METHOD"] == "POST")){
+
+    $email=$_POST['email'];
+    $password=$_POST['password'];
+    // Email Validation
+    if(empty($_POST['email'])){
+        $email_error="* Email is required";
+    }
+    else{
+        $pattern = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
+        if (!preg_match($pattern, $_POST['email'])) {
+            $email_error="* Invalid Email";
+        } 
+        else {
+            $email=$_POST['email'];
+        }
+    }
+    
+    // Password Validation
+    if(empty($_POST['password'])){
+        $password_error="* Password is required";
+    }
+    else{
+        $password=$_POST['password'];
+        // echo $password;
+    }
+
+    require_once 'includes/connection.php';
+    $sql = "SELECT * FROM users WHERE email='" . $email . "' AND password='" . $password . "'";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result)==1){
+        $row=mysqli_fetch_assoc($result);
+        if($email==$row['email'] && $password==$row['password']){
+            $_SESSION['email']=$row['email'];
+            $_SESSION['name']=$row['name'];
+            header('location: dashboard.php');
+        }
+    }
+    else{
+        echo "Incorrect email and password";
+    }
+    
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,15 +61,17 @@
 
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Email:</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+            <input type="email" name="email" value="<?php echo isset($email) ? $email : "";?>" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+            <span class="text-danger"><?php echo(isset($email_error)) ? $email_error : "";?></span>
         </div>
 
         <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Password:</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <input type="password" name="password" value="<?php echo isset($password) ? $password : "";?>" class="form-control" id="exampleInputPassword1">
+            <span class="text-danger"><?php echo(isset($password_error)) ? $password_error : "";?></span>
         </div>
 
-        <button type="button" class="btn btn-primary login">Login</button>
+        <button type="submit" name="login" class="btn btn-primary login">Login</button>
     </form>
 </div>
 </body>

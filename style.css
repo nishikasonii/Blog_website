@@ -91,6 +91,15 @@ body {
 }
 
 
+/* === Add New Form === */
+.addnewform{
+  width: 400px;
+  background-color: #ffffff;
+  padding: 35px;
+  border-radius: 15px;
+}
+
+
 /* Brand */
 .sidebar-brand {
   display: flex;

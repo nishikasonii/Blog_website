@@ -8,63 +8,27 @@
     <title>Categories</title>
 </head>
 <body>
-    <div class="dashboard-layout">
+  <div class="dashboard-layout">
   
   <!-- Sidebar -->
-  <aside class="sidebar">
-    
-    <div class="sidebar-brand">
-      <div class="brand-text">
-        <span class="brand-name ">Blogify</span>
-      </div>
-    </div>
+  <?php 
+    $page_name = "Categories";
+    include_once('includes/sidebar.php');
+  ?>
 
-    <nav class="sidebar-nav">
-      <span class="nav-section">Main Menu</span>
-      
-      <!-- dashboard -->
-      <a href="dashboard.php" class="nav-item">
-        <span class="nav-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
-            <polyline points="9 22 9 12 15 12 15 22"/>
-          </svg>
-        </span>
-        <span class="nav-label">Dashboard</span>
-        <!-- <span class="nav-badge hot">4</span> -->
-      </a>
-
-      <!-- categories -->
-      <a href="categories.php" class="nav-item active">
-        <span class="nav-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
-            <polyline points="9 22 9 12 15 12 15 22"/>
-          </svg>
-        </span>
-        <span class="nav-label">Categories</span>
-        <!-- <span class="nav-badge hot">4</span> -->
-      </a>
-  </aside>
 
   <!-- Main Content -->
   <main class="main-content">
-    <header class="top-bar">
-      <h1 class="page-title">Categories</h1>
-      <div class="header-actions">
-        <button class="btn-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-            <path d="M13.73 21a2 2 0 01-3.46 0"/>
-          </svg>
-        </button>
-        <div class="header-avatar">
-          <button type="button" class="btn btn-primary">Log Out</button>
-        </div>
-      </div>
-    </header>
+    <?php 
+    $page_name="Categories";
+    include_once('includes/header.php') 
 
-    <button type="button" class="btn btn-primary addnew">+ Add New</button>
+    ?>
+
+    <!-- Add new button -->
+    <a href="addnew.php" class="btn btn-primary addnew">+ Add New</a>
+
+    <!-- Categories Table -->
     <table class="table table-hover">
         <thead class="text-center table-primary">
             <tr>
@@ -79,7 +43,7 @@
             <tr>
                 <td>1.</td>
                 <td>Lifestyle & Personal Blogs</td>
-                <td>Active</td>
+                <td><span class="badge rounded-pill text-bg-success px-3 py-2">Active</span></td>
                 <td>
                     <button type="button" class="btn btn-success px-3 py-1">Edit</button>
                     <button type="button" class="btn btn-danger px-2 py-1">Delete</button>
@@ -89,7 +53,7 @@
             <tr>
                 <td>2.</td>
                 <td>Food & Recipe Blogs</td>
-                <td>Active</td>
+                <td><span class="badge rounded-pill text-bg-success px-3 py-2">Active</span></td>
                 <td>
                     <button type="button" class="btn btn-success px-3 py-1">Edit</button>
                     <button type="button" class="btn btn-danger px-2 py-1">Delete</button>
@@ -99,7 +63,7 @@
             <tr>
                 <td>3.</td>
                 <td>Business & Finance</td>
-                <td>In Active</td>
+                <td><span class="badge rounded-pill text-bg-danger px-2 py-2">In Active</span></td>
                 <td>
                     <button type="button" class="btn btn-success px-3 py-1">Edit</button>
                     <button type="button" class="btn btn-danger px-2 py-1">Delete</button>
@@ -109,7 +73,7 @@
             <tr>
                 <td>4.</td>
                 <td>Technology & Science</td>
-                <td>In Active</td>
+                <td><span class="badge rounded-pill text-bg-danger px-2 py-2">In Active</span></td>
                 <td>
                     <button type="button" class="btn btn-success px-3 py-1">Edit</button>
                     <button type="button" class="btn btn-danger px-2 py-1">Delete</button>
