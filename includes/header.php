@@ -8,7 +8,7 @@
           </svg>
         </button>
         <div class="header-avatar">
-          <button type="button" class="btn btn-primary">Log Out</button>
+          <a href="logout.php" class="btn btn-primary">Log Out</a>
         </div>
       </div>
     </header>
