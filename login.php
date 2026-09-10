@@ -1,4 +1,9 @@
 <?php
+session_start();
+if(isset($_SESSION['email'])){
+    header('location: dashboard.php');
+}
+
 if(isset($_POST["login"]) && ($_SERVER["REQUEST_METHOD"] == "POST")){
 
     $email=$_POST['email'];
@@ -38,9 +43,8 @@ if(isset($_POST["login"]) && ($_SERVER["REQUEST_METHOD"] == "POST")){
         }
     }
     else{
-        echo "Incorrect email and password";
-    }
-    
+        $login_error="* Enter all fields";
+    }   
 }
 ?>
 
@@ -72,6 +76,7 @@ if(isset($_POST["login"]) && ($_SERVER["REQUEST_METHOD"] == "POST")){
         </div>
 
         <button type="submit" name="login" class="btn btn-primary login">Login</button>
+        <span class="text-danger"><?php echo(isset($login_error)) ? $login_error : "";?></span>
     </form>
 </div>
 </body>
