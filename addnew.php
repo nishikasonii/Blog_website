@@ -1,3 +1,50 @@
+<?php
+session_start();
+if(!isset($_SESSION['email'])){
+  header('location: login.php');
+}
+
+$category_name = "";
+$status = "";
+// $categoryname_error = "";
+// $status_error = "";
+$success="";
+$validation=true;
+
+if(isset($_POST["addnewbtn"]) && ($_SERVER["REQUEST_METHOD"] == "POST")){
+  
+  // Category Name Validation
+  if(empty($_POST['category_name'])){
+    $categoryname_error="* Category name required";
+    $validation=false;
+  }
+  else{
+    $category_name=$_POST['category_name'];
+  }
+
+  // Status validation
+  if(empty($_POST['status']) && $_POST['status']!=0){
+    $status_error="* Status is required";
+    $validation=false;
+  }
+  else{
+    $status=$_POST['status'];
+  }
+
+  // All validadtion true
+  if($validation){
+    require_once 'includes/connection.php';
+    $sql = "INSERT INTO categories(name, status) VALUES ('$category_name', $status);";
+    // print_r($sql);
+    if(mysqli_query($conn, $sql)){
+      $success="New category added successfully !!  ";
+      header('location: categories.php');
+    }
+  }
+  
+} 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,46 +58,39 @@
   <div class="dashboard-layout">
   
   <!-- Sidebar -->
-  <?php include_once('includes/sidebar.php') ?>
+  <?php 
+    $page_name="Add New Category";
+    include_once('includes/sidebar.php') 
+  ?>
 
   <!-- Main Content -->
   <main class="main-content">
-    <header class="top-bar">
-      <h1 class="page-title">Add New Category</h1>
-      <div class="header-actions">
-        <button class="btn-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-            <path d="M13.73 21a2 2 0 01-3.46 0"/>
-          </svg>
-        </button>
-        <div class="header-avatar">
-          <button type="button" class="btn btn-primary">Log Out</button>
-        </div>
-      </div>
-    </header>
+    <?php include_once('includes/header.php') ?>
 
     <!-- To add new categories -->
     <div class="container addnewform">
         <div class="row">
-            <form action="" method="POST">
+          <span class="text-success fs-5 success"><?php echo $success?></span>
+            <form action="addnew.php" method="POST">
             <h1 class="heading">Add New Category</h1>
 
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Category Name:</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1">
+                <input type="text" name="category_name" value="<?php echo isset($category_name) ? $category_name : "";?>" class="form-control" id="exampleFormControlInput1">
+                <span class="text-danger"><?php echo(isset($categoryname_error)) ? $categoryname_error : "";?></span>
             </div>
 
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Status:</label>
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Select Status</option>
-                    <option value="active">Active</option>
-                    <option value="in active">InActive</option>
+                <select name="status" class="form-select" aria-label="Default select example">
+                    <option value="" selected>Select Status</option>
+                    <option value="1" <?php echo ($status == "active") ? "selected" : ""; ?>>Active</option>
+                    <option value="0" <?php echo ($status == "0") ? "selected" : ""; ?>>InActive</option>
                 </select>
+                <span class="text-danger"><?php echo(isset($status_error)) ? $status_error : "";?></span>
             </div>  
 
-            <button type="button" class="btn btn-primary login">Add new</button>
+            <button type="submit" name="addnewbtn" class="btn btn-primary login">Add new</button>
         </form>
         </div>
         
